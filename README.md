@@ -367,10 +367,6 @@ O projeto inclui:
 
 Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
 
-## 📞 Suporte
-
-Para suporte, envie um email para [seu-email@exemplo.com] ou abra uma issue no repositório.
-
 ## 🔄 Changelog
 
 ### v1.0.0
