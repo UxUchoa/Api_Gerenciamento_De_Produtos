@@ -23,7 +23,7 @@
 
 # 🛍️ Sistema de Gestão de Produtos
 
-Sistema completo de CRUD (Create, Read, Update, Delete) para gestão de produtos desenvolvido com NestJS, TypeORM e PostgreSQL.
+Sistema completo de CRUD (Create, Read, Update, Delete) para gestão de produtos desenvolvido com NestJS, TypeORM, PostgreSQL e documentação automática com Swagger.
 
 ## 📋 Índice
 
@@ -33,6 +33,7 @@ Sistema completo de CRUD (Create, Read, Update, Delete) para gestão de produtos
 - [Instalação](#instalação)
 - [Configuração](#configuração)
 - [Executando o Projeto](#executando-o-projeto)
+- [📚 Documentação da API (Swagger)](#-documentação-da-api-swagger)
 - [API Endpoints](#api-endpoints)
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Banco de Dados](#banco-de-dados)
@@ -51,6 +52,8 @@ Este projeto é um sistema de gestão de produtos que permite:
 - ✅ Excluir produtos
 - ✅ Validação de dados
 - ✅ Persistência em banco PostgreSQL
+- ✅ **Documentação automática com Swagger**
+- ✅ **Interface interativa para testes da API**
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -61,11 +64,13 @@ Este projeto é um sistema de gestão de produtos que permite:
 - **PostgreSQL** - Banco de dados relacional
 - **Docker** - Containerização da aplicação
 - **class-validator** - Validação de dados
+- **@nestjs/swagger** - Documentação automática da API
 
 ### Ferramentas de Desenvolvimento
 - **ESLint** - Linter para código JavaScript/TypeScript
 - **Prettier** - Formatador de código
 - **Jest** - Framework de testes
+- **Swagger UI** - Interface interativa para documentação
 
 ## 📋 Pré-requisitos
 
@@ -130,6 +135,10 @@ O TypeORM está configurado para:
 npm run start:dev
 ```
 
+A aplicação estará disponível em:
+- **API**: http://localhost:3000
+- **Documentação Swagger**: http://localhost:3000/api
+
 ### Modo Produção
 ```bash
 npm run build
@@ -141,17 +150,101 @@ npm run start:prod
 npm run start:debug
 ```
 
+## 📚 Documentação da API (Swagger)
+
+### 🎯 Acessando a Documentação
+
+Após iniciar o servidor, acesse a documentação interativa:
+
+```
+http://localhost:3000/api
+```
+
+### ✨ Funcionalidades do Swagger
+
+- **📖 Documentação Automática**: Baseada nas decorações do código
+- **🧪 Interface Interativa**: Teste os endpoints diretamente no navegador
+- **📝 Exemplos de Dados**: Para facilitar os testes
+- **✅ Validação Visual**: Mostra campos obrigatórios e opcionais
+- **📊 Códigos de Resposta**: Documenta todos os status HTTP possíveis
+- **🔍 Schemas**: Visualização completa dos DTOs e entidades
+
+### 📋 Endpoints Documentados
+
+| Endpoint | Método | Descrição | Status |
+|----------|--------|-----------|--------|
+| `/products` | `POST` | Criar novo produto | ✅ Documentado |
+| `/products` | `GET` | Listar todos os produtos | ✅ Documentado |
+| `/products/{id}` | `GET` | Buscar produto por ID | ✅ Documentado |
+| `/products/{id}` | `PATCH` | Atualizar produto | ✅ Documentado |
+| `/products/{id}` | `DELETE` | Excluir produto | ✅ Documentado |
+
+### 🎨 Exemplo de Uso da Interface Swagger
+
+1. **Acesse** http://localhost:3000/api
+2. **Expanda** o endpoint desejado (ex: POST /products)
+3. **Clique** em "Try it out"
+4. **Preencha** os dados no formato JSON
+5. **Execute** o endpoint
+6. **Visualize** a resposta em tempo real
+
+### 📝 Exemplo de Dados para Teste
+
+```json
+{
+  "name": "Smartphone Samsung Galaxy S21",
+  "description": "Smartphone com tela de 6.2 polegadas, 128GB de armazenamento",
+  "price": 2999.99,
+  "stock": 50
+}
+```
+
 ## 🔌 API Endpoints
 
 ### Produtos
 
-| Método | Endpoint | Descrição | Body |
-|--------|----------|-----------|------|
-| `POST` | `/products` | Criar novo produto | `CreateProductDto` |
-| `GET` | `/products` | Listar todos os produtos | - |
-| `GET` | `/products/:id` | Buscar produto por ID | - |
-| `PATCH` | `/products/:id` | Atualizar produto | `UpdateProductDto` |
-| `DELETE` | `/products/:id` | Excluir produto | - |
+| Método | Endpoint | Descrição | Body | Status |
+|--------|----------|-----------|------|--------|
+| `POST` | `/products` | Criar novo produto | `CreateProductDto` | ✅ |
+| `GET` | `/products` | Listar todos os produtos | - | ✅ |
+| `GET` | `/products/:id` | Buscar produto por ID | - | ✅ |
+| `PATCH` | `/products/:id` | Atualizar produto | `UpdateProductDto` | ✅ |
+| `DELETE` | `/products/:id` | Excluir produto | - | ✅ |
+
+### 📊 Schemas da API
+
+#### CreateProductDto
+```json
+{
+  "name": "string (mín. 3 caracteres, obrigatório)",
+  "description": "string (opcional)",
+  "price": "number (positivo, obrigatório)",
+  "stock": "number (obrigatório)"
+}
+```
+
+#### UpdateProductDto
+```json
+{
+  "name": "string (mín. 3 caracteres, opcional)",
+  "description": "string (opcional)",
+  "price": "number (positivo, opcional)",
+  "stock": "number (opcional)"
+}
+```
+
+#### Product Entity
+```json
+{
+  "id": "number (auto-gerado)",
+  "name": "string (único)",
+  "description": "string (opcional)",
+  "price": "number",
+  "stock": "number",
+  "createdAt": "Date (auto-gerado)",
+  "updatedAt": "Date (auto-atualizado)"
+}
+```
 
 ### Exemplos de Uso
 
@@ -354,6 +447,7 @@ O projeto inclui:
 - Logs detalhados de conexão com banco
 - Logs de queries SQL (em desenvolvimento)
 - Tratamento de erros com mensagens descritivas
+- **Documentação automática com Swagger**
 
 ## 🤝 Contribuição
 
@@ -373,6 +467,12 @@ Para suporte, envie um email para [seu-email@exemplo.com] ou abra uma issue no r
 
 ## 🔄 Changelog
 
+### v1.1.0
+- ✅ **Documentação automática com Swagger**
+- ✅ **Interface interativa para testes da API**
+- ✅ **Decorações completas nos DTOs e entidades**
+- ✅ **Exemplos de dados para facilitar testes**
+
 ### v1.0.0
 - ✅ CRUD completo de produtos
 - ✅ Validação de dados
@@ -382,4 +482,4 @@ Para suporte, envie um email para [seu-email@exemplo.com] ou abra uma issue no r
 
 ---
 
-**Desenvolvido com ❤️ usando NestJS**
+**Desenvolvido com ❤️ usando NestJS e Swagger**
